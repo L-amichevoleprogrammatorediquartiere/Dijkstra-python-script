@@ -13,7 +13,7 @@ and the last but not least
 
 - select node->calculate: select the node for calculate the tab (at the moment print on the console and not in the window(sorry))
 
-### example of graph drawning
+### example of graph drawing
 
 ![Schermata del 2024-02-29 19-53-33](https://github.com/L-amichevoleprogrammatorediquartiere/Dijkstra-python-script/assets/64810680/d3c32ba5-0cf5-4508-9e7a-476b3d56db2a)
 ### example of output
