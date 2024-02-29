@@ -1,15 +1,6 @@
 collegamenti_peso= None
 nodo_peso_success= []
 
-def inserimentoDati():
-    global collegamenti_peso
-    
-    collegamenti_peso=[['a','b', 5],
-                       ['a','c', 10],
-                       ['c','d', 2],
-                       ['d','b', 11],
-                       ['c','b', 3]]
-
 def calcolaPercorso(a):
     global collegamenti_peso
     global nodo_peso_success
@@ -34,12 +25,26 @@ def calcolaPercorso(a):
 
     nodi_visti=[a]
     for i in range(len(nodi)-1):
+        #non bisogna assegnare il primo tra i vicini ma quello con 
+        #il costo minimo tra quelli vicini non visti
+        #qui troviamo un costo su cui basarci
         for nodi in nodi_vicini:
             if(nodi not in nodi_visti):
-                nodo_scelto=nodi
-                break
+                if(calcolaCostoFinal(nodi)!=-1):
+                    costo_min= calcolaCostoFinal(nodi)
+        #qui troviamo il costo minimo
+        for nodi in nodi_vicini:
+            if(nodi not in nodi_visti):
+                if(calcolaCostoFinal(nodi)!=-1 and calcolaCostoFinal(nodi)<costo_min):
+                    costo_min= calcolaCostoFinal(nodi)
+        #qui scdgliamo il nodo
+        for nodi in nodi_vicini:
+            if(nodi not in nodi_visti):
+                if(calcolaCostoFinal(nodi)== costo_min):
+                    nodo_scelto=nodi
+                    break            
+
         nodi_vicini=adiacenzaNodi(nodo_scelto)
-        #nodi_vicini.remove(a)
         for nodi in nodi_vicini:
             assegnaCostoSucc(nodi,calcolaPeso(nodi,nodo_scelto)+
                              calcolaCostoFinal(nodo_scelto),nodo_scelto)
@@ -82,7 +87,10 @@ def stampaRisultati():
     for nodo in nodo_peso_success:
         print(nodo[0],"\t",nodo[1],"\t",nodo[2])
 
-if __name__ == '__main__':
-    inserimentoDati()
-    calcolaPercorso("d")
+def calculate(array_collegamenti, nodo):
+    global collegamenti_peso
+    global nodo_peso_success
+    nodo_peso_success=[]
+    collegamenti_peso=array_collegamenti
+    calcolaPercorso(nodo)
     stampaRisultati()
